@@ -17,9 +17,17 @@ namespace BLL.DAL
         public decimal? Height { get; set; }
         public decimal? Weight { get; set; }
 
+        // Way 1:
+        //public int SpeciesId { get; set; }
+        // Way 2:
+        //[Required]
+        //public int? SpeciesId { get; set; }
+        // Way 3:
+        [Required(ErrorMessage = "Species is required!")] // ErrorMessage will be shown in the view
         public int? SpeciesId { get; set; }
+
         public Species Species { get; set; } // navigational property
 
-        public List<PetOwner> PetOwners { get; set; } = new List<PetOwner>();
+        public List<PetOwner> PetOwners { get; set; } = new List<PetOwner>(); // navigational property
     }
 }

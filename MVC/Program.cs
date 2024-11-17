@@ -1,5 +1,7 @@
 using BLL.DAL;
+using BLL.Models;
 using BLL.Services;
+using BLL.Services.Bases;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,10 @@ builder.Services.AddControllersWithViews();
 var connectionString = "server=(localdb)\\mssqllocaldb;database=PetsAppDB;trusted_connection=true;";
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<ISpeciesService, SpeciesService>(); // AddSingleton, AddTransient
+// Way 1:
+//builder.Services.AddScoped<IPetService, PetService>();
+// Way 2:
+builder.Services.AddScoped<IService<Pet, PetModel>, PetService>();
 
 var app = builder.Build();
 
