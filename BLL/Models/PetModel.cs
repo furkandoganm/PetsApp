@@ -20,5 +20,19 @@ namespace BLL.Models
         public string Weight => (Record.Weight ?? 0).ToString("N1");
 
         public string Species => Record.Species?.Name;
+
+        // Way 1:
+        //[DisplayName("Owners")]
+        //public List<Owner> OwnerList => Record.PetOwners?.Select(po => po.Owner).ToList();
+
+        // Way 2:
+        public string Owners => string.Join("<br>", Record.PetOwners?.Select(po => po.Owner?.Name + " " + po.Owner?.Surname));
+
+        [DisplayName("Owners")]
+        public List<int> OwnerIds 
+        { 
+            get => Record.PetOwners?.Select(po => po.OwnerId).ToList();
+            set => Record.PetOwners = value.Select(v => new PetOwner() { OwnerId = v }).ToList();
+        }
     }
 }

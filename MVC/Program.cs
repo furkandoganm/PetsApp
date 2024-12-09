@@ -9,14 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// AppSettings
+var appSettingsSection = builder.Configuration.GetSection(nameof(AppSettings));
+appSettingsSection.Bind(new AppSettings());
+
 // IoC Container:
-var connectionString = "server=(localdb)\\mssqllocaldb;database=PetsAppDB;trusted_connection=true;";
+var connectionString = builder.Configuration.GetConnectionString("Db");
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<ISpeciesService, SpeciesService>(); // AddSingleton, AddTransient
 // Way 1:
 //builder.Services.AddScoped<IPetService, PetService>();
 // Way 2:
 builder.Services.AddScoped<IService<Pet, PetModel>, PetService>();
+
+builder.Services.AddScoped<IService<Owner, OwnerModel>, OwnerService>();
 
 var app = builder.Build();
 

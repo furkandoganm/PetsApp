@@ -17,21 +17,21 @@ namespace MVC.Controllers
         private readonly ISpeciesService _speciesService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        //private readonly IManyToManyRecordService _ManyToManyRecordService;
+        private readonly IService<Owner, OwnerModel> _ownerService;
 
         public PetsController(
             IService<Pet, PetModel> petService
             , ISpeciesService speciesService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //, IManyToManyRecordService ManyToManyRecordService
+            , IService<Owner, OwnerModel> ownerService
         )
         {
             _petService = petService;
             _speciesService = speciesService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //_ManyToManyRecordService = ManyToManyRecordService;
+            _ownerService = ownerService;
         }
 
         // GET: Pets
@@ -56,7 +56,7 @@ namespace MVC.Controllers
             ViewData["SpeciesId"] = new SelectList(_speciesService.Query().ToList(), "Record.Id", "Name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
+            ViewBag.OwnerIds = new MultiSelectList(_ownerService.Query().ToList(), "Record.Id", "NameAndSurname");
         }
 
         // GET: Pets/Create
