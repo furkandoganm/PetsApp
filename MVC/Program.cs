@@ -23,6 +23,7 @@ builder.Services.AddScoped<ISpeciesService, SpeciesService>(); // AddSingleton, 
 builder.Services.AddScoped<IService<Pet, PetModel>, PetService>();
 
 builder.Services.AddScoped<IService<Owner, OwnerModel>, OwnerService>();
+builder.Services.AddScoped<IService<User, UserModel>, UserService>();
 
 var app = builder.Build();
 
